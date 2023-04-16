@@ -25,6 +25,7 @@ public class CharacterRed extends Emtity {
         y = 200;
         width = 100;
         height = 100;
+        hp = 10;
         speed = gameScreen.playerSpeed;
         action = "left";
         jumpSpeed = gameScreen.jumpSpeed;
@@ -41,12 +42,21 @@ public class CharacterRed extends Emtity {
     }
 
     public void update() {
+
         isCollision = false;
         gameScreen.checkCollision.checkCollision(this);
 
-        if(keyboardHandle.up1) {
-            action = "jump";
+        if(keyboardHandle.right1 && keyboardHandle.up1) {
+            action = "jump_right";
             if(!isCollision) {
+                x += speed;
+                y -= gameScreen.jumpSpeed;
+            }
+        }
+        else if(keyboardHandle.left1 && keyboardHandle.up1) {
+            action = "jump_left";
+            if(!isCollision) {
+                x -= speed;
                 y -= gameScreen.jumpSpeed;
             }
         }
@@ -61,6 +71,11 @@ public class CharacterRed extends Emtity {
             if(!isCollision) {
                 x -= speed;
             }
+        } else if(keyboardHandle.up1) {
+            action = "jump";
+            if(!isCollision) {
+                y -= gameScreen.jumpSpeed;
+            }
         }
 
         if(y < 700 && !keyboardHandle.up1) {
@@ -72,6 +87,7 @@ public class CharacterRed extends Emtity {
 
     public void draw(Graphics2D graphics2D) {
         BufferedImage imageCharacters = right;
+
         switch (action) {
             case "right":
                 imageCharacters = right;
@@ -81,5 +97,8 @@ public class CharacterRed extends Emtity {
                 break;
         }
         graphics2D.drawImage(imageCharacters, x, y,width, height, null);
+        for(int i = 0; i < hp; i++) {
+            graphics2D.draw(new Rectangle(x + i*25, y - 50 , 25, 10));
+        }
     }
 }

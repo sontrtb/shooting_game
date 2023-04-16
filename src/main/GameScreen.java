@@ -2,6 +2,7 @@ package main;
 
 
 import entity.background.Background;
+import entity.bullets.BulletDefult;
 import entity.character.CharacterBlue;
 import entity.character.CharacterRed;
 import entity.environment.Land;
@@ -26,6 +27,9 @@ public class GameScreen extends JPanel implements  Runnable {
     CharacterRed character_red =  new CharacterRed(this, handleKeyboard);
     WallManager wallManager = new WallManager(this);
     Land land = new Land(this);
+
+    BulletDefult bullet_red = new BulletDefult(this, character_red, character_blue);
+    BulletDefult bullet_blue = new BulletDefult(this, character_blue, character_red);
 
     public CheckCollision checkCollision = new CheckCollision(this);
 
@@ -63,6 +67,10 @@ public class GameScreen extends JPanel implements  Runnable {
     public void update() {
         character_blue.update();
         character_red.update();
+
+        bullet_red.update();
+        bullet_blue.update();
+
     }
 
     public void paintComponent(Graphics g) {
@@ -74,6 +82,9 @@ public class GameScreen extends JPanel implements  Runnable {
 
         character_blue.draw(graphics2D);
         character_red.draw(graphics2D);
+
+        bullet_red.draw(graphics2D);
+        bullet_blue.draw(graphics2D);
 
         wallManager.draw(graphics2D);
 

@@ -1,8 +1,10 @@
-package entity.environment;
+package entity.bullets;
 
 import java.awt.image.BufferedImage;
 
-public class Emtity {
+public class Interface {
     public int x, y, width, height;
+    public int speed;
+    public String direction;
     public BufferedImage image;
 }

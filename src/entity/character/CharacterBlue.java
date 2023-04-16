@@ -15,15 +15,21 @@ public class CharacterBlue extends Emtity {
     public CharacterBlue(GameScreen gameScreen, KeyboardHandle keyboardHandle) {
         this.gameScreen = gameScreen;
         this.keyboardHandle = keyboardHandle;
+
         defaultValue();
         characterImage();
     }
 
     public void defaultValue() {
-        x = 100;
-        y = 100;
-        speed = 4;
+        x = 1300;
+        y = 200;
+        width = 100;
+        height = 100;
+        hp = 10;
+        speed = gameScreen.playerSpeed;
         action = "right";
+        jumpSpeed = gameScreen.jumpSpeed;
+        gravitation = gameScreen.gravitation;
     }
 
     public void characterImage() {
@@ -36,17 +42,45 @@ public class CharacterBlue extends Emtity {
     }
 
     public void update() {
-        if(keyboardHandle.up2) {
-            action = "jump";
-            y -= speed;
+        isCollision = false;
+        gameScreen.checkCollision.checkCollision(this);
+
+        if(keyboardHandle.right2 && keyboardHandle.up2) {
+            action = "jump_right";
+            if(!isCollision) {
+                x += speed;
+                y -= gameScreen.jumpSpeed;
+            }
         }
-        if(keyboardHandle.right2) {
+        else if(keyboardHandle.left2 && keyboardHandle.up2) {
+            action = "jump_left";
+            if(!isCollision) {
+                x -= speed;
+                y -= gameScreen.jumpSpeed;
+            }
+        }
+        else if(keyboardHandle.right2) {
             action = "right";
-            x += speed;
+            if(!isCollision) {
+                x += speed;
+            }
         }
-        if(keyboardHandle.left2) {
+        else if(keyboardHandle.left2) {
             action = "left";
-            x -= speed;
+            if(!isCollision) {
+                x -= speed;
+            }
+        } else if(keyboardHandle.up2) {
+            action = "jump";
+            if(!isCollision) {
+                y -= gameScreen.jumpSpeed;
+            }
+        }
+
+        if(y < 700 && !keyboardHandle.up2) {
+            if(!isCollisionGravitation) {
+                y += gravitation;
+            }
         }
     }
 
@@ -60,6 +94,10 @@ public class CharacterBlue extends Emtity {
                 imageCharacters = left;
                 break;
         }
-        graphics2D.drawImage(imageCharacters, x, y,100, 100, null);
+        graphics2D.drawImage(imageCharacters, x, y,width, height, null);
+        for(int i = 0; i < hp; i++) {
+            graphics2D.draw(new Rectangle(x + i*25, y - 50 , 25, 10));
+        }
     }
 }
+
