@@ -1,7 +1,10 @@
 package main;
 
-import entity.CharacterBlue;
-import entity.CharacterRed;
+
+import entity.background.Background;
+import entity.character.CharacterBlue;
+import entity.character.CharacterRed;
+import entity.environment.Wall;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,16 +12,25 @@ import java.awt.*;
 public class GameScreen extends JPanel implements  Runnable {
     // SETTING
     int FPS = 60;
+    public int playerSpeed = 1;
+    public int gravitation = 3;
+    public int jumpSpeed = 5;
+    public int widthPlayer = 100;
+    public int heightPlayer = 100;
 
+
+    //
     Thread gameThread;
+    Background background = new Background(this);
     KeyboardHandle handleKeyboard = new KeyboardHandle();
     CharacterBlue character_blue =  new CharacterBlue(this, handleKeyboard);
     CharacterRed character_red =  new CharacterRed(this, handleKeyboard);
+    Wall wall = new Wall(this);
+
+    public CheckCollision checkCollision = new CheckCollision(this);
 
     // position player
-    int playerX = 100;
-    int playerY = 100;
-    int playerSpeed = 4;
+
     public GameScreen () {
         this.setBackground(Color.gray);
         this.setDoubleBuffered(true);
@@ -57,8 +69,12 @@ public class GameScreen extends JPanel implements  Runnable {
         super.paintComponent(g);
         Graphics2D graphics2D = (Graphics2D)g;
 
+        background.draw(graphics2D);
+
         character_blue.draw(graphics2D);
         character_red.draw(graphics2D);
+
+        wall.draw(graphics2D);
 
         graphics2D.dispose();
     }

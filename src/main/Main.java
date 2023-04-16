@@ -4,7 +4,7 @@ import javax.swing.*;
 
 public class Main {
     public static void main(String[] args) {
-        JFrame  j_frame = new JFrame("Game danh nhau");
+        JFrame  j_frame = new JFrame("Game ban sung");
         j_frame.setSize(1600, 900);
         j_frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 

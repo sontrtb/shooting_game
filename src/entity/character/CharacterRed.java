@@ -1,4 +1,4 @@
-package entity;
+package entity.character;
 
 import main.GameScreen;
 import main.KeyboardHandle;
@@ -8,13 +8,16 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-public class CharacterRed extends Emtity{
+public class CharacterRed extends Emtity {
     GameScreen gameScreen;
     KeyboardHandle keyboardHandle;
 
     public CharacterRed(GameScreen gameScreen, KeyboardHandle keyboardHandle) {
         this.gameScreen = gameScreen;
         this.keyboardHandle = keyboardHandle;
+
+        soidArea = new Rectangle(x, y, gameScreen.widthPlayer, gameScreen.heightPlayer);
+
         defaultValue();
         characterImage();
     }
@@ -22,39 +25,46 @@ public class CharacterRed extends Emtity{
     public void defaultValue() {
         x = 200;
         y = 200;
-        speed = 4;
+        speed = gameScreen.playerSpeed;
         action = "left";
+        jumpSpeed = gameScreen.jumpSpeed;
+        gravitation = gameScreen.gravitation;
     }
 
     public void characterImage() {
         try {
-            right = ImageIO.read(getClass().getResourceAsStream("media/characters/character_2_right.png"));
-            left = ImageIO.read(getClass().getResourceAsStream("media/characters/character_2_left.png"));
+            right = ImageIO.read(getClass().getResourceAsStream("media/character_2_right.png"));
+            left = ImageIO.read(getClass().getResourceAsStream("media/character_2_left.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     public void update() {
+        isCollision = false;
+        gameScreen.checkCollision.checkCollision(this);
+
         if(keyboardHandle.up1) {
-            if(y < 0) return;
             action = "jump";
-            y -= speed;
-        }
-        if(keyboardHandle.down1) {
-            if(y > 900 - 100) return;
-            action = "jump";
-            y += speed;
+            if(!isCollision) {
+                y -= gameScreen.jumpSpeed;
+            }
         }
         if(keyboardHandle.right1) {
-            if(x > 1600 - 100) return;
             action = "right";
-            x += speed;
+            if(!isCollision) {
+                x += speed;
+            }
         }
         if(keyboardHandle.left1) {
-            if(x < 0) return;
             action = "left";
-            x -= speed;
+            if(!isCollision) {
+                x -= speed;
+            }
+        }
+
+        if(y < 800 && !keyboardHandle.up1) {
+            y+=gravitation;
         }
     }
 

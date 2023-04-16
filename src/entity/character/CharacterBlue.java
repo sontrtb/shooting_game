@@ -1,4 +1,4 @@
-package entity;
+package entity.character;
 
 import main.GameScreen;
 import main.KeyboardHandle;
@@ -8,7 +8,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-public class CharacterBlue extends Emtity{
+public class CharacterBlue extends Emtity {
     GameScreen gameScreen;
     KeyboardHandle keyboardHandle;
 
@@ -28,8 +28,8 @@ public class CharacterBlue extends Emtity{
 
     public void characterImage() {
         try {
-            right = ImageIO.read(getClass().getResourceAsStream("media/characters/character_1_right.png"));
-            left = ImageIO.read(getClass().getResourceAsStream("media/characters/character_1_left.png"));
+            right = ImageIO.read(getClass().getResourceAsStream("media/character_1_right.png"));
+            left = ImageIO.read(getClass().getResourceAsStream("media/character_1_left.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -39,10 +39,6 @@ public class CharacterBlue extends Emtity{
         if(keyboardHandle.up2) {
             action = "jump";
             y -= speed;
-        }
-        if(keyboardHandle.down2) {
-            action = "jump";
-            y += speed;
         }
         if(keyboardHandle.right2) {
             action = "right";
