@@ -4,7 +4,9 @@ package main;
 import entity.background.Background;
 import entity.character.CharacterBlue;
 import entity.character.CharacterRed;
+import entity.environment.Land;
 import entity.environment.Wall;
+import entity.environment.WallManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,9 +17,6 @@ public class GameScreen extends JPanel implements  Runnable {
     public int playerSpeed = 1;
     public int gravitation = 3;
     public int jumpSpeed = 5;
-    public int widthPlayer = 100;
-    public int heightPlayer = 100;
-
 
     //
     Thread gameThread;
@@ -25,7 +24,8 @@ public class GameScreen extends JPanel implements  Runnable {
     KeyboardHandle handleKeyboard = new KeyboardHandle();
     CharacterBlue character_blue =  new CharacterBlue(this, handleKeyboard);
     CharacterRed character_red =  new CharacterRed(this, handleKeyboard);
-    Wall wall = new Wall(this);
+    WallManager wallManager = new WallManager(this);
+    Land land = new Land(this);
 
     public CheckCollision checkCollision = new CheckCollision(this);
 
@@ -70,11 +70,12 @@ public class GameScreen extends JPanel implements  Runnable {
         Graphics2D graphics2D = (Graphics2D)g;
 
         background.draw(graphics2D);
+        land.draw(graphics2D);
 
         character_blue.draw(graphics2D);
         character_red.draw(graphics2D);
 
-        wall.draw(graphics2D);
+        wallManager.draw(graphics2D);
 
         graphics2D.dispose();
     }

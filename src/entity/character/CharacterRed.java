@@ -16,8 +16,6 @@ public class CharacterRed extends Emtity {
         this.gameScreen = gameScreen;
         this.keyboardHandle = keyboardHandle;
 
-        soidArea = new Rectangle(x, y, gameScreen.widthPlayer, gameScreen.heightPlayer);
-
         defaultValue();
         characterImage();
     }
@@ -25,6 +23,8 @@ public class CharacterRed extends Emtity {
     public void defaultValue() {
         x = 200;
         y = 200;
+        width = 100;
+        height = 100;
         speed = gameScreen.playerSpeed;
         action = "left";
         jumpSpeed = gameScreen.jumpSpeed;
@@ -50,21 +50,23 @@ public class CharacterRed extends Emtity {
                 y -= gameScreen.jumpSpeed;
             }
         }
-        if(keyboardHandle.right1) {
+        else if(keyboardHandle.right1) {
             action = "right";
             if(!isCollision) {
                 x += speed;
             }
         }
-        if(keyboardHandle.left1) {
+        else if(keyboardHandle.left1) {
             action = "left";
             if(!isCollision) {
                 x -= speed;
             }
         }
 
-        if(y < 800 && !keyboardHandle.up1) {
-            y+=gravitation;
+        if(y < 700 && !keyboardHandle.up1) {
+            if(!isCollisionGravitation) {
+                y += gravitation;
+            }
         }
     }
 
@@ -78,6 +80,6 @@ public class CharacterRed extends Emtity {
                 imageCharacters = left;
                 break;
         }
-        graphics2D.drawImage(imageCharacters, x, y,100, 100, null);
+        graphics2D.drawImage(imageCharacters, x, y,width, height, null);
     }
 }

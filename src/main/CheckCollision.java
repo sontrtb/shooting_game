@@ -10,24 +10,25 @@ public class CheckCollision {
     }
 
     public void checkCollision(Emtity player) {
-        int playerRightX = player.x + player.soidArea.x + player.soidArea.width;
-        int playerLeftX = player.x + player.soidArea.x;
-        int playerTopY = player.y + player.soidArea.y;
-        int playerBottomY = player.y + player.soidArea.y + player.soidArea.height;
+        int playerRightX = player.x  + player.width;
+        int playerLeftX = player.x;
+        int playerTopY = player.y;
+        int playerBottomY = player.y + player.height;
 
-        int heightWall = gameScreen.wall.height;
-        int widthWall = gameScreen.wall.width * gameScreen.wall.numberWidthItem;
+        int wallRightCol = playerRightX/50;
+        int wallLeftCol = playerLeftX/50;
+        int wallTopRow = playerTopY/50;
+        int wallBottomRow = playerBottomY/50;
 
-        int wallRightX = gameScreen.wall.x;
-        int wallLeftX = wallRightX + widthWall;
-        int wallTopY = gameScreen.wall.y;
-        int wallBottomY = wallTopY + heightWall;
-
-//        System.out.println(playerBottomY + " " + wallBottomY);
-
+        // check di chuyển trái phải, nhảy
+        int wallNum1;
+        int wallNum2;
        switch (player.action) {
            case "jump":
-               if(Math.abs(playerBottomY - wallBottomY) < 5) {
+               wallNum1 = gameScreen.wallManager.mapArray[wallRightCol][wallTopRow];
+               wallNum2 = gameScreen.wallManager.mapArray[wallLeftCol][wallTopRow];
+
+               if(wallNum1 == 1 || wallNum2 == 1) {
                    player.isCollision = true;
                }
                break;
@@ -35,7 +36,17 @@ public class CheckCollision {
                break;
            case "left":
                break;
-
        }
+
+
+       // check rơi tự do
+        int wallNum3 = gameScreen.wallManager.mapArray[wallRightCol][wallBottomRow];
+        int wallNum4 = gameScreen.wallManager.mapArray[wallLeftCol][wallBottomRow];
+
+        if(wallNum3 == 1 || wallNum4 == 1) {
+            player.isCollisionGravitation = true;
+        } else {
+            player.isCollisionGravitation = false;
+        }
     }
 }
