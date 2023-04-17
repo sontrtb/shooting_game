@@ -47,7 +47,7 @@ public class CharacterBlue extends Emtity {
         isCollision = false;
         gameScreen.checkCollision.checkCollision(this);
 
-        if(keyboardHandle.right2 && keyboardHandle.up2) {
+        if(keyboardHandle.right2 && keyboardHandle.up2 && !isJump) {
             action = "jump_right";
             if(!isCollision) {
                 x += speedX;
