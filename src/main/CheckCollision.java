@@ -38,7 +38,6 @@ public class CheckCollision {
                break;
        }
 
-
        // check rơi tự do
         int wallNum3 = gameScreen.wallManager.mapArray[wallRightCol][wallBottomRow];
         int wallNum4 = gameScreen.wallManager.mapArray[wallLeftCol][wallBottomRow];

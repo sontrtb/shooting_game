@@ -21,7 +21,7 @@ public class CharacterRed extends Emtity {
     }
 
     public void defaultValue() {
-        x = 500;
+        x = 700;
         y = 100;
         width = 100;
         height = 100;
