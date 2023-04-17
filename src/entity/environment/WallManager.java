@@ -13,13 +13,14 @@ import java.io.InputStreamReader;
 public class WallManager {
     GameScreen gameScreen;
     public Wall wall;
+
     public int mapArray[][];
 
     public WallManager(GameScreen gameScreen) {
         this.gameScreen = gameScreen;
         wall = new Wall();
         wallImage();
-        mapArray = new int[32][18];
+        mapArray = new int[gameScreen.sizeCol][gameScreen.sizeRow];
         loadMap();
     }
 
@@ -30,15 +31,15 @@ public class WallManager {
 
             int col = 0;
             int row = 0;
-            while (col < 1600/50 && row < 900/50) {
+            while (col < gameScreen.sizeCol && row < gameScreen.sizeRow) {
                 String line = br.readLine();
-                while (col < 1600/50) {
+                while (col < gameScreen.sizeCol) {
                     String numbers[] = line.split(" ");
                     int num = Integer.parseInt(numbers[col]);
                     mapArray[col][row] = num;
                     col++;
                 }
-                if(col == 1600/50) {
+                if(col == gameScreen.sizeCol) {
                     col = 0;
                     row++;
                 }
@@ -52,7 +53,7 @@ public class WallManager {
 
     public void wallImage() {
         try {
-            wall.image = ImageIO.read(getClass().getResourceAsStream("media/wall.jpg"));
+            wall.image = ImageIO.read(getClass().getResourceAsStream("media/wall.png"));
             wall.isCollision = true;
         } catch (IOException e) {
             e.printStackTrace();
@@ -64,21 +65,21 @@ public class WallManager {
         int row = 0;
         int x = 0;
         int y = 0;
-        while (col < 1600/50 && row < 900/50) {
+        while (col < gameScreen.sizeCol && row < gameScreen.sizeRow) {
             int wallNum = mapArray[col][row];
 
            if(wallNum == 1) {
-               graphics2D.drawImage(wall.image, x, y, 50, 50, null);
+               graphics2D.drawImage(wall.image, x, y, gameScreen.sizeWall, gameScreen.sizeWall, null);
            }
 
             col ++;
-            x += 50;
+            x += gameScreen.sizeWall;
 
-            if(col == 1600/50) {
+            if(col == gameScreen.sizeCol) {
                 col = 0;
                 x = 0;
                 row ++;
-                y += 50;
+                y += gameScreen.sizeWall;
             }
         }
     }

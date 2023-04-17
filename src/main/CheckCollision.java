@@ -15,26 +15,26 @@ public class CheckCollision {
         int playerTopY = player.y;
         int playerBottomY = player.y + player.height;
 
-        int wallRightCol = playerRightX/50;
-        int wallLeftCol = playerLeftX/50;
-        int wallTopRow = playerTopY/50;
-        int wallBottomRow = playerBottomY/50;
+        int wallRightCol = playerRightX/gameScreen.sizeWall;
+        int wallLeftCol = playerLeftX/gameScreen.sizeWall;
+        int wallTopRow = playerTopY/gameScreen.sizeWall;
+        int wallBottomRow = playerBottomY/gameScreen.sizeWall;
 
         // check di chuyển trái phải, nhảy
         int wallNum1;
         int wallNum2;
        switch (player.action) {
            case "jump":
+           case "jump_right":
+           case "jump_left":
+           case "right":
+           case "left":
                wallNum1 = gameScreen.wallManager.mapArray[wallRightCol][wallTopRow];
                wallNum2 = gameScreen.wallManager.mapArray[wallLeftCol][wallTopRow];
 
                if(wallNum1 == 1 || wallNum2 == 1) {
                    player.isCollision = true;
                }
-               break;
-           case "right":
-               break;
-           case "left":
                break;
        }
 

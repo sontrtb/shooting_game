@@ -2,20 +2,19 @@ package entity.bullets;
 
 import entity.character.Emtity;
 import main.GameScreen;
-import main.KeyboardHandle;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-public class BulletDefult extends Interface {
+public class BulletBlue extends Interface {
     GameScreen gameScreen;
     Emtity player;
     Emtity competitor;
 
 
-    public BulletDefult(GameScreen gameScreen, Emtity player, Emtity competitor) {
+    public BulletBlue(GameScreen gameScreen, Emtity player, Emtity competitor) {
         this.gameScreen = gameScreen;
         this.player = player;
         this.competitor = competitor;
@@ -25,12 +24,13 @@ public class BulletDefult extends Interface {
     }
 
     public void defaultValue() {
-        x = player.x;
-        y = player.y;
-        height = 150;
-        width = 300;
-        speed = 15;
+        x = player.x - player.width/2;
+        y = player.y + player.height/2 - height/2;
+        height = 100;
+        width = 200;
+        speed = 40;
         direction = player.action;
+        timeSize = 40;
     }
 
     public void getBulletImage() {
@@ -46,35 +46,40 @@ public class BulletDefult extends Interface {
     boolean isHide = false;
     public void update() {
         time ++;
-        if(time < 80) {
+        if(time < timeSize) {
             switch (direction) {
                 case "jump":
-                    y -= speed;
-                    break;
                 case "jump_right":
-                    x += speed;
-                    y -= speed;
-                    break;
-                case "jump_left":
-                    x -= speed;
-                    y -= speed;
-                    break;
                 case "right":
                     x += speed;
                     break;
+                case "jump_left":
                 case "left":
                     x -= speed;
                     break;
             }
 
             // bắn trúng
-            if(Math.abs(x - competitor.x) < 10 && Math.abs(y - competitor.y) < 10) {
+            if(
+                    Math.abs(x + width/2 - competitor.x - competitor.width /2) < competitor.width /2 &&
+                    Math.abs(y + height/2 - competitor.y - competitor.height/2) < competitor.height /2 && !isHide
+            ) {
                 isHide = true;
                 competitor.hp --;
             }
         } else {
-            x = player.x;
-            y = player.y;
+            switch (direction) {
+                case "jump":
+                case "jump_right":
+                case "right":
+                    x = player.x - player.width/2;
+                    break;
+                case "jump_left":
+                case "left":
+                    x = player.x - player.width;
+                    break;
+            }
+            y = player.y + player.height/2 - height/2;
             direction = player.action;
             time = 0;
             isHide = false;

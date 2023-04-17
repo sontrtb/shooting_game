@@ -21,14 +21,15 @@ public class CharacterRed extends Emtity {
     }
 
     public void defaultValue() {
-        x = 200;
-        y = 200;
+        x = 500;
+        y = 100;
         width = 100;
         height = 100;
-        hp = 10;
-        speed = gameScreen.playerSpeed;
-        action = "left";
-        jumpSpeed = gameScreen.jumpSpeed;
+        hp = 5;
+        speedX = 5;
+        fallSpeed = 0;
+        action = "right";
+        jumpSpeed = 40;
         gravitation = gameScreen.gravitation;
     }
 
@@ -41,47 +42,66 @@ public class CharacterRed extends Emtity {
         }
     }
 
+    boolean isJump = false;
     public void update() {
 
         isCollision = false;
         gameScreen.checkCollision.checkCollision(this);
 
-        if(keyboardHandle.right1 && keyboardHandle.up1) {
+        if(keyboardHandle.right1 && keyboardHandle.up1 && !isJump) {
             action = "jump_right";
             if(!isCollision) {
-                x += speed;
-                y -= gameScreen.jumpSpeed;
+                x += speedX;
+                isJump = true;
+                fallSpeed = 0;
             }
         }
-        else if(keyboardHandle.left1 && keyboardHandle.up1) {
+        else if(keyboardHandle.left1 && keyboardHandle.up1 && !isJump) {
             action = "jump_left";
             if(!isCollision) {
-                x -= speed;
-                y -= gameScreen.jumpSpeed;
+                x -= speedX;
+                isJump = true;
+                fallSpeed = 0;
             }
         }
         else if(keyboardHandle.right1) {
             action = "right";
             if(!isCollision) {
-                x += speed;
+                x += speedX;
             }
         }
         else if(keyboardHandle.left1) {
             action = "left";
             if(!isCollision) {
-                x -= speed;
+                x -= speedX;
             }
-        } else if(keyboardHandle.up1) {
+        }
+        else if(keyboardHandle.up1 && !isJump) {
             action = "jump";
+            isJump = true;
+            fallSpeed = 0;
+        }
+
+        // nhảy
+        if(isJump && jumpSpeed > 0) {
             if(!isCollision) {
-                y -= gameScreen.jumpSpeed;
+                y -= jumpSpeed;
+                jumpSpeed -= gravitation;
+            }else {
+                jumpSpeed = 0;
             }
         }
 
-        if(y < 700 && !keyboardHandle.up1) {
-            if(!isCollisionGravitation) {
-                y += gravitation;
-            }
+
+        // rơi tự do
+        int reduceGravitation = 4; // hệ số giảm tốc độ rơi
+        if(!isCollisionGravitation) {
+            y += fallSpeed/reduceGravitation;
+            fallSpeed = fallSpeed + gravitation;
+        } else {
+            fallSpeed = 0;
+            isJump = false;
+            jumpSpeed = 20;
         }
     }
 
@@ -98,7 +118,7 @@ public class CharacterRed extends Emtity {
         }
         graphics2D.drawImage(imageCharacters, x, y,width, height, null);
         for(int i = 0; i < hp; i++) {
-            graphics2D.draw(new Rectangle(x + i*25, y - 50 , 25, 10));
+            graphics2D.draw(new Rectangle(x + i*20, y - 50 , 20, 10));
         }
     }
 }

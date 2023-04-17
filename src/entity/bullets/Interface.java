@@ -7,4 +7,5 @@ public class Interface {
     public int speed;
     public String direction;
     public BufferedImage image;
+    public int timeSize;
 }

@@ -1,12 +1,10 @@
 package main;
 
-
 import entity.background.Background;
-import entity.bullets.BulletDefult;
+import entity.bullets.BulletBlue;
+import entity.bullets.BulletRed;
 import entity.character.CharacterBlue;
 import entity.character.CharacterRed;
-import entity.environment.Land;
-import entity.environment.Wall;
 import entity.environment.WallManager;
 
 import javax.swing.*;
@@ -15,9 +13,12 @@ import java.awt.*;
 public class GameScreen extends JPanel implements  Runnable {
     // SETTING
     int FPS = 60;
-    public int playerSpeed = 1;
-    public int gravitation = 3;
-    public int jumpSpeed = 5;
+    public int gravitation = 1;
+
+    public int sizeWall = 50;
+    public int sizeCol = 1600/sizeWall;
+    public int sizeRow = 900/sizeWall;
+    public boolean isRunning = true;
 
     //
     Thread gameThread;
@@ -26,10 +27,9 @@ public class GameScreen extends JPanel implements  Runnable {
     CharacterBlue character_blue =  new CharacterBlue(this, handleKeyboard);
     CharacterRed character_red =  new CharacterRed(this, handleKeyboard);
     WallManager wallManager = new WallManager(this);
-    Land land = new Land(this);
 
-    BulletDefult bullet_red = new BulletDefult(this, character_red, character_blue);
-    BulletDefult bullet_blue = new BulletDefult(this, character_blue, character_red);
+    BulletRed bullet_red = new BulletRed(this, character_red, character_blue);
+    BulletBlue bullet_blue = new BulletBlue(this, character_blue, character_red);
 
     public CheckCollision checkCollision = new CheckCollision(this);
 
@@ -49,10 +49,9 @@ public class GameScreen extends JPanel implements  Runnable {
 
     @Override
     public void run() {
-        int delayTime = 1000 / FPS;
-        double nextDrawTime = System.nanoTime() + delayTime;
+        long delayTime = 1000 / FPS;
 
-        while (true) {
+        while (isRunning) {
             update();
             repaint();
 
@@ -71,6 +70,11 @@ public class GameScreen extends JPanel implements  Runnable {
         bullet_red.update();
         bullet_blue.update();
 
+        if(character_red.hp == 0 || character_blue.hp == 0) {
+            isRunning = false;
+
+        }
+
     }
 
     public void paintComponent(Graphics g) {
@@ -78,15 +82,13 @@ public class GameScreen extends JPanel implements  Runnable {
         Graphics2D graphics2D = (Graphics2D)g;
 
         background.draw(graphics2D);
-        land.draw(graphics2D);
+        wallManager.draw(graphics2D);
 
         character_blue.draw(graphics2D);
         character_red.draw(graphics2D);
 
         bullet_red.draw(graphics2D);
         bullet_blue.draw(graphics2D);
-
-        wallManager.draw(graphics2D);
 
         graphics2D.dispose();
     }

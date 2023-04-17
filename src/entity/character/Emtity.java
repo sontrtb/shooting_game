@@ -6,7 +6,7 @@ import java.awt.image.BufferedImage;
 public class Emtity {
     public int x, y;
     public int width, height;
-    public int speed, jumpSpeed, gravitation;
+    public int speedX, fallSpeed, jumpSpeed, gravitation;
     public int hp;
     public BufferedImage right, left;
     public String action;
