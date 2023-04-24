@@ -26,8 +26,8 @@ public class BulletBlue extends Bullet {
     public void defaultValue() {
         x = player.x - player.width/2;
         y = player.y + player.height/2 - height/2;
-        height = 100;
-        width = 200;
+        height = 15;
+        width = 20;
         speed = 40;
         direction = player.action;
         timeSize = 40;
@@ -72,11 +72,11 @@ public class BulletBlue extends Bullet {
                 case "jump":
                 case "jump_right":
                 case "right":
-                    x = player.x - player.width/2;
+                    x = player.x + player.width;
                     break;
                 case "jump_left":
                 case "left":
-                    x = player.x - player.width;
+                    x = player.x;
                     break;
             }
             y = player.y + player.height/2 - height/2;
