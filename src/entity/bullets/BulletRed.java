@@ -35,8 +35,8 @@ public class BulletRed extends Bullet {
 
     public void getBulletImage() {
         try {
-            image = ImageIO.read(getClass().getResourceAsStream("media/default_1.png"));
-
+            right = ImageIO.read(getClass().getResourceAsStream("media/right_2.png"));
+            left = ImageIO.read(getClass().getResourceAsStream("media/left_2.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -87,7 +87,17 @@ public class BulletRed extends Bullet {
     }
 
     public void draw(Graphics2D graphics2D) {
-        BufferedImage bulletImage = image;
+        BufferedImage bulletImage = left;
+        switch (direction) {
+            case "right":
+            case "jump_right":
+                bulletImage = right;
+                break;
+            case "left":
+            case "jump_left":
+                bulletImage = left;
+                break;
+        }
         if(!isHide) {
             graphics2D.drawImage(bulletImage, x, y, width, height, null);
         }

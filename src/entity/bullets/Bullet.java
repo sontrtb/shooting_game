@@ -6,6 +6,6 @@ public class Bullet {
     public int x, y, width, height;
     public int speed;
     public String direction;
-    public BufferedImage image;
+    public BufferedImage right, left;
     public int timeSize;
 }

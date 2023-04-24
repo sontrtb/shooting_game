@@ -37,6 +37,9 @@ public class CharacterBlue extends Character {
         try {
             right = ImageIO.read(getClass().getResourceAsStream("media/character_1_right.png"));
             left = ImageIO.read(getClass().getResourceAsStream("media/character_1_left.png"));
+            jump_right = ImageIO.read(getClass().getResourceAsStream("media/character_1_jump_right.png"));
+            jump_left = ImageIO.read(getClass().getResourceAsStream("media/character_1_jump_left.png"));
+            jump = ImageIO.read(getClass().getResourceAsStream("media/character_1_jump.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -112,6 +115,15 @@ public class CharacterBlue extends Character {
                 break;
             case "left":
                 imageCharacters = left;
+                break;
+            case "jump_right":
+                imageCharacters = jump_right;
+                break;
+            case "jump_left":
+                imageCharacters = jump_left;
+                break;
+            case "jump":
+                imageCharacters = jump;
                 break;
         }
         graphics2D.drawImage(imageCharacters, x, y,width, height, null);
