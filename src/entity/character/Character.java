@@ -1,9 +1,8 @@
 package entity.character;
 
-import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
-public class Emtity {
+public class Character {
     public int x, y;
     public int width, height;
     public int speedX, fallSpeed, jumpSpeed, gravitation;

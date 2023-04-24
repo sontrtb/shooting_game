@@ -8,7 +8,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-public class CharacterBlue extends Emtity {
+public class CharacterBlue extends Character {
     GameScreen gameScreen;
     KeyboardHandle keyboardHandle;
 
@@ -17,7 +17,7 @@ public class CharacterBlue extends Emtity {
         this.keyboardHandle = keyboardHandle;
 
         defaultValue();
-        characterImage();
+        getImage();
     }
 
     public void defaultValue() {
@@ -33,7 +33,7 @@ public class CharacterBlue extends Emtity {
         gravitation = gameScreen.gravitation;
     }
 
-    public void characterImage() {
+    public void getImage() {
         try {
             right = ImageIO.read(getClass().getResourceAsStream("media/character_1_right.png"));
             left = ImageIO.read(getClass().getResourceAsStream("media/character_1_left.png"));
@@ -116,7 +116,7 @@ public class CharacterBlue extends Emtity {
         }
         graphics2D.drawImage(imageCharacters, x, y,width, height, null);
         for(int i = 0; i < hp; i++) {
-            graphics2D.draw(new Rectangle(x + i*25, y - 50 , 25, 10));
+            graphics2D.draw(new Rectangle(x + i*20, y - 50 , 20, 10));
         }
     }
 }

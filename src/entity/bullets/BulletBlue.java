@@ -1,6 +1,6 @@
 package entity.bullets;
 
-import entity.character.Emtity;
+import entity.character.Character;
 import main.GameScreen;
 
 import javax.imageio.ImageIO;
@@ -8,13 +8,13 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-public class BulletBlue extends Interface {
+public class BulletBlue extends Bullet {
     GameScreen gameScreen;
-    Emtity player;
-    Emtity competitor;
+    Character player;
+    Character competitor;
 
 
-    public BulletBlue(GameScreen gameScreen, Emtity player, Emtity competitor) {
+    public BulletBlue(GameScreen gameScreen, Character player, Character competitor) {
         this.gameScreen = gameScreen;
         this.player = player;
         this.competitor = competitor;

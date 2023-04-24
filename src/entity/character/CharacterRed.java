@@ -8,7 +8,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-public class CharacterRed extends Emtity {
+public class CharacterRed extends Character {
     GameScreen gameScreen;
     KeyboardHandle keyboardHandle;
 

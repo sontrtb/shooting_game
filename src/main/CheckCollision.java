@@ -1,6 +1,6 @@
 package main;
 
-import entity.character.Emtity;
+import entity.character.Character;
 
 public class CheckCollision {
     GameScreen gameScreen;
@@ -9,7 +9,7 @@ public class CheckCollision {
         this.gameScreen = gameScreen;
     }
 
-    public void checkCollision(Emtity player) {
+    public void checkCollision(Character player) {
         int playerRightX = player.x  + player.width;
         int playerLeftX = player.x;
         int playerTopY = player.y;

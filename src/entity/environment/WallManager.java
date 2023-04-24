@@ -24,7 +24,7 @@ public class WallManager {
         loadMap();
     }
 
-    public void loadMap() {
+    private void loadMap() {
         try {
             InputStream is = getClass().getResourceAsStream("maps/map.txt");
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
